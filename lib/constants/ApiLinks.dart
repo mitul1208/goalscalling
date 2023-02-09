@@ -1,0 +1,14 @@
+const String BASE_URL = "https://goalscaling.com/api/";
+// const String TEMP_URL = "http://148.72.245.78/goalscale-master/api/";
+const String LOGIN_URL = BASE_URL + "user/login";
+const String LOGOUT_URL = BASE_URL + "user/logout";
+const String GET_PROFILE = BASE_URL + "user/profile";
+const String UPDATE_PROFILE = BASE_URL + "user/profile/picture/update";
+const String GET_GOALS = BASE_URL + "user/goals/v2/";
+// const String GET_GOALS = TEMP_URL + "user/goals/";
+const String GET_GOAL_DETAIL = BASE_URL + "user/goal";
+const String SET_GOAL_MESSAGE = BASE_URL + "user/goal/activity/add/";
+const String UPDATE_DEVICE_TOKEN = BASE_URL + "user/update/device/token";
+const String GET_NOTIFICATIONS = BASE_URL + "user/notifications";
+const String GET_PARTICIPANT_LIST = BASE_URL + "participants/";
+const String GET_PROVIDER_LIST = BASE_URL + "providers/";

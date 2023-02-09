@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "547729408567",
+    "project_id": "goalscaling-83809",
+    "storage_bucket": "goalscaling-83809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547729408567:android:fac7ca017113b4be33f5b2",
+        "android_client_info": {
+          "package_name": "com.wmu.goalscaling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547729408567-d09n69gag0ms2k7lecti0ono2lo2ksjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wmu.goalscaling",
+            "certificate_hash": "17520fec8f78cad4f4b752166349cb16fb3d9db2"
+          }
+        },
+        {
+          "client_id": "547729408567-hr0k2qbgueetkpc9c7hq24bilp2hbtv9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9FHRSaaRKWccjfSJPyoe9omMdOk8c7wA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547729408567-hr0k2qbgueetkpc9c7hq24bilp2hbtv9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
