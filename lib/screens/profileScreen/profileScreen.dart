@@ -14,17 +14,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  double height;
-  double width;
+  double height = 0;
+  double width = 0;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = true;
-  String displayName, displayEmail;
+  String? displayName, displayEmail;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController telephoneController = TextEditingController();
-  User data;
-  File selectedImage;
+  User? data;
+  File? selectedImage;
   @override
   void initState() {
     // TODO: implement initState
@@ -63,18 +63,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             alignment: Alignment.center,
                             width: 80.0,
                             height: 80.0,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                               color: primaryColor,
-                              image: new DecorationImage(
+                              image: DecorationImage(
                                 image: data == null
-                                    ? AssetImage(USER_ICON)
-                                    : NetworkImage(
-                                        data?.image ?? NO_IMAGE_FOUND),
+                                    ? AssetImage(USER_ICON) as ImageProvider<Object>
+                                    : NetworkImage(data!.image) as ImageProvider<Object>,
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: new BorderRadius.all(
-                                  new Radius.circular(50.0)),
-                              border: new Border.all(
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              border: Border.all(
                                 color: primaryColor,
                                 width: 1.0,
                               ),
@@ -153,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               setState(() {
                 isLoading = true;
               });
-              if (_formKey.currentState.validate()) {
+              if (_formKey.currentState!.validate()) {
                 bool isSuccess = await updateUserData(
                     first_name: fullNameController.text,
                     last_name: lastNameController.text,
@@ -178,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: TextFormField(
         controller: fullNameController,
         validator: (val) {
-          if (val.isEmpty) {
+          if (val==null || val.isEmpty) {
             return "required";
           } else {
             return null;
@@ -198,19 +196,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
@@ -231,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: TextFormField(
         controller: lastNameController,
         validator: (val) {
-          if (val.isEmpty) {
+          if (val==null || val.isEmpty) {
             return "required";
           } else {
             return null;
@@ -251,19 +249,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
@@ -284,7 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: TextFormField(
         controller: emailController,
         validator: (val) {
-          if (val.isEmpty) {
+          if (val==null || val.isEmpty) {
             return "required";
           } else {
             return null;
@@ -304,19 +302,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
@@ -337,7 +335,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: TextFormField(
         controller: telephoneController,
         validator: (val) {
-          if (val.isEmpty) {
+          if (val==null || val.isEmpty) {
             return "required";
           } else {
             return null;
@@ -357,19 +355,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
@@ -387,13 +385,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   getProfileData() async {
     data = await profileApi();
     if (data != null) {
-      fullNameController.text = data.firstName;
-      emailController.text = data.email;
-      telephoneController.text = data.phone;
+      fullNameController.text = data!.firstName;
+      emailController.text = data!.email;
+      telephoneController.text = data!.phone;
       displayEmail = emailController.text;
-      lastNameController.text = data.lastName;
+      lastNameController.text = data!.lastName;
       displayName = fullNameController.text + " " + lastNameController.text;
-      print(data.image);
+      print(data!.image);
     }
     setState(() {
       isLoading = false;
@@ -401,17 +399,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _selectImage() async {
-    File profileImage = await selectSingleImage();
+    File? profileImage = await selectSingleImage();
+    if(profileImage==null){
+      return;
+    }
     selectedImage = profileImage;
     setState(() {
       isLoading = true;
     });
     bool isSucess = await uploadProfileImage(
         image: profileImage,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        phone: data.phone);
+        first_name: data!.firstName,
+        last_name: data!.lastName,
+        email: data!.email,
+        phone: data!.phone);
 
     if (isSucess) {
       //data = await profileApi();

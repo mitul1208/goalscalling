@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_searchabledropdown/apis/getNotificationApi.dart';
 
@@ -16,8 +15,8 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  double width;
-  double height;
+  double width = 0;
+  double height = 0;
   List<NotificationsModel> list = [];
   bool isLoading = true;
   @override
@@ -31,13 +30,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return WillPopScope(
-      onWillPop: () {
+      onWillPop: () async{
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (
           BuildContext context,
         ) {
           return GoalsList();
         }));
-        return null;
+        return true;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -59,7 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : list == null || list.length == 0
+            : list.length == 0
                 ? Center(
                     child: Text(
                       "No data found",
@@ -87,69 +86,69 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               );
                             },
                             child: Slidable(
-                              actionPane: SlidableDrawerActionPane(),
-                              actionExtentRatio: 0.15,
-                              closeOnScroll: true,
-                              secondaryActions: [
-                                // Padding(
-                                //   padding:
-                                //       const EdgeInsets.symmetric(vertical: 5),
-                                //   child: Container(
-                                //     color: Colors.red.withOpacity(0.8),
-                                //     width: width * 0.1,
-                                //     child: Column(
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.center,
-                                //       mainAxisAlignment:
-                                //           MainAxisAlignment.center,
-                                //       children: [
-                                //         Image.asset(
-                                //           REJECT,
-                                //           width: 25,
-                                //           height: 25,
-                                //         ),
-                                //         Text(
-                                //           "Reject",
-                                //           style: TextStyle(
-                                //               color: Colors.white,
-                                //               fontSize: width * 0.037,
-                                //               fontWeight: FontWeight.bold),
-                                //           textAlign: TextAlign.right,
-                                //         )
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                                // Padding(
-                                //   padding:
-                                //       const EdgeInsets.symmetric(vertical: 5),
-                                //   child: Container(
-                                //     color: Colors.green.withOpacity(0.8),
-                                //     width: width * 0.1,
-                                //     child: Column(
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.center,
-                                //       mainAxisAlignment:
-                                //           MainAxisAlignment.center,
-                                //       children: [
-                                //         Image.asset(
-                                //           ACCEPT,
-                                //           width: 25,
-                                //           height: 25,
-                                //         ),
-                                //         Text(
-                                //           "Accept",
-                                //           style: TextStyle(
-                                //               color: Colors.white,
-                                //               fontSize: width * 0.037,
-                                //               fontWeight: FontWeight.bold),
-                                //           textAlign: TextAlign.right,
-                                //         )
-                                //       ],
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
+                              // actionPane: SlidableDrawerActionPane(),
+                              // actionExtentRatio: 0.15,
+                              // closeOnScroll: true,
+                              // secondaryActions: [
+                              //   // Padding(
+                              //   //   padding:
+                              //   //       const EdgeInsets.symmetric(vertical: 5),
+                              //   //   child: Container(
+                              //   //     color: Colors.red.withOpacity(0.8),
+                              //   //     width: width * 0.1,
+                              //   //     child: Column(
+                              //   //       crossAxisAlignment:
+                              //   //           CrossAxisAlignment.center,
+                              //   //       mainAxisAlignment:
+                              //   //           MainAxisAlignment.center,
+                              //   //       children: [
+                              //   //         Image.asset(
+                              //   //           REJECT,
+                              //   //           width: 25,
+                              //   //           height: 25,
+                              //   //         ),
+                              //   //         Text(
+                              //   //           "Reject",
+                              //   //           style: TextStyle(
+                              //   //               color: Colors.white,
+                              //   //               fontSize: width * 0.037,
+                              //   //               fontWeight: FontWeight.bold),
+                              //   //           textAlign: TextAlign.right,
+                              //   //         )
+                              //   //       ],
+                              //   //     ),
+                              //   //   ),
+                              //   // ),
+                              //   // Padding(
+                              //   //   padding:
+                              //   //       const EdgeInsets.symmetric(vertical: 5),
+                              //   //   child: Container(
+                              //   //     color: Colors.green.withOpacity(0.8),
+                              //   //     width: width * 0.1,
+                              //   //     child: Column(
+                              //   //       crossAxisAlignment:
+                              //   //           CrossAxisAlignment.center,
+                              //   //       mainAxisAlignment:
+                              //   //           MainAxisAlignment.center,
+                              //   //       children: [
+                              //   //         Image.asset(
+                              //   //           ACCEPT,
+                              //   //           width: 25,
+                              //   //           height: 25,
+                              //   //         ),
+                              //   //         Text(
+                              //   //           "Accept",
+                              //   //           style: TextStyle(
+                              //   //               color: Colors.white,
+                              //   //               fontSize: width * 0.037,
+                              //   //               fontWeight: FontWeight.bold),
+                              //   //           textAlign: TextAlign.right,
+                              //   //         )
+                              //   //       ],
+                              //   //     ),
+                              //   //   ),
+                              //   // ),
+                              // ],
                               child: Padding(
                                 padding: EdgeInsets.all(5),
                                 child: Card(
@@ -185,7 +184,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               color: primaryColor,
                                               image: new DecorationImage(
                                                 image: NetworkImage(
-                                                    list[index]?.from?.image ??
+                                                    list[index].from.image ??
                                                         NO_IMAGE_FOUND),
                                                 fit: BoxFit.cover,
                                               ),

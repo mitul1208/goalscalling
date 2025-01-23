@@ -21,6 +21,6 @@ Future<Uint8List> testCompressFile(File file) async {
   );
 
   print('Original File : ' + file.lengthSync().toString());
-  print('Compressed File : ' + result.length.toString());
+  print('Compressed File : ' + result!.length.toString());
   return result;
 }

@@ -5,7 +5,7 @@ import 'package:flutter_searchabledropdown/constants/ApiLinks.dart';
 import 'package:flutter_searchabledropdown/model/goalModel.dart';
 import 'package:http/http.dart';
 
-Future<List<GoalModel>> goalApi({String id}) async {
+Future<List<GoalModel>> goalApi({required String id}) async {
   print(GET_GOALS + id);
   // Response response =
   //     await get(GET_GOALS, headers: {'Authorization': 'Bearer ' + await getToken()});

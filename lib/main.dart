@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_searchabledropdown/common/toastMessage.dart';
 import 'package:flutter_searchabledropdown/loadingScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_searchabledropdown/screens/notificationScreen/NotificationScreen.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -20,25 +17,25 @@ void main() async {
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   LocalNotificationService.initialize();
-  HttpOverrides.global = new MyHttpOverrides();
+  // HttpOverrides.global = new MyHttpOverrides();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
   runApp(MyApp());
 }
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
-  static int toNotification;
+  static int toNotification = 0;
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -50,7 +47,6 @@ class _MyAppState extends State<MyApp> {
   bool showAuth = false;
   @override
   void initState() {
-    MyApp.toNotification = 0;
     super.initState();
     handleForegroundMessage();
     getMessage();
@@ -59,12 +55,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        builder: (BuildContext context, Widget child) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: child,
-          );
-        },
+        // builder: (BuildContext context, Widget child) {
+        //   return MediaQuery(
+        //     data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        //     child: child,
+        //   );
+        // },
         title: 'Goal scaling',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

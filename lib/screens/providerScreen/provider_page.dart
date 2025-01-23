@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_searchabledropdown/apis/ParticipantsList.dart';
 import 'package:flutter_searchabledropdown/constants/SharedPrefs.dart';
 
 import 'package:flutter_searchabledropdown/model/ProviderList.dart';
-import 'package:flutter_searchabledropdown/model/participentList.dart';
 import 'package:flutter_searchabledropdown/screens/authQuestionDialog/authQuestionDialog.dart';
 
 import 'package:flutter_searchabledropdown/screens/drawer/drawer.dart';
@@ -22,13 +22,13 @@ class MyProvider extends StatefulWidget {
 
 class _MyProviderState extends State<MyProvider> {
   List<String> goalScales = ['0', '1', '2', '3', '4'];
-  double width;
-  double height;
-  ProviderListModel list;
+  double width = 0;
+  double height = 0;
+  ProviderListModel? list;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isLoading = true;
   String title = "";
-  Widget wdgt;
+  Widget? wdgt;
   List<String> programNames = [];
 
   final LocalAuthentication auth = LocalAuthentication();
@@ -64,7 +64,7 @@ class _MyProviderState extends State<MyProvider> {
       title = "Home";
       wdgt = IconButton(
         onPressed: () {
-          _scaffoldKey.currentState.openDrawer();
+          _scaffoldKey.currentState!.openDrawer();
         },
         icon: Icon(
           Icons.menu,
@@ -93,7 +93,6 @@ class _MyProviderState extends State<MyProvider> {
       key: _scaffoldKey,
       drawer: DrawerScreen(),
       appBar: AppBar(
-        brightness: Brightness.dark,
         titleSpacing: 0,
         centerTitle: false,
         title: Text(
@@ -101,7 +100,7 @@ class _MyProviderState extends State<MyProvider> {
           style: TextStyle(
             color: Colors.black,
           ),
-        ),
+        ), systemOverlayStyle: SystemUiOverlayStyle.light,
         // leading: wdgt,
       ),
       body: isLoading
@@ -109,20 +108,20 @@ class _MyProviderState extends State<MyProvider> {
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: list.providers.length,
+              itemCount: list!.providers.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () async {
                     print("Provider ID 6");
-                    print(list.providers[index].providerId.toString());
+                    print(list!.providers[index].providerId.toString());
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => MyParticipants(
-                                id: list.providers[index].providerId.toString(),
+                                id: list!.providers[index].providerId.toString(),
                                 showBackButton: true,
                                 myTitle:
-                                    list.providers[index].provider.firstName,
+                                    list!.providers[index].provider.firstName,
                                 // index: int.parse(list[index].id),
                                 // title: list[index].name,
                               )),
@@ -172,7 +171,7 @@ class _MyProviderState extends State<MyProvider> {
                                         backgroundColor: Colors.amber,
                                         radius: 25.0,
                                         backgroundImage: NetworkImage(
-                                          list.providers[index].provider.image,
+                                          list!.providers[index].provider.image,
                                         ),
                                       ),
                                       SizedBox(
@@ -186,7 +185,7 @@ class _MyProviderState extends State<MyProvider> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              list.providers[index].provider
+                                              list!.providers[index].provider
                                                   .fullName,
                                               style: TextStyle(
                                                 fontSize: width * 0.043,
@@ -208,7 +207,7 @@ class _MyProviderState extends State<MyProvider> {
                                                   " : " +
                                                       DateFormat('MMM-dd, yyyy')
                                                           .format(DateTime
-                                                              .parse(list
+                                                              .parse(list!
                                                                   .providers[
                                                                       index]
                                                                   .provider
@@ -253,7 +252,7 @@ class _MyProviderState extends State<MyProvider> {
                                           ),
                                         ),
                                         Text(
-                                          " : ${list.providers[index].provider.userDetail.numUsers}   ",
+                                          " : ${list!.providers[index].provider.userDetail.numUsers}   ",
                                           style: TextStyle(
                                             color: Colors.grey,
                                           ),
@@ -273,7 +272,7 @@ class _MyProviderState extends State<MyProvider> {
                                       ),
                                     ),
                                     Text(
-                                      " : ${list.providers[index].provider.userDetail.numUsersGoals}",
+                                      " : ${list!.providers[index].provider.userDetail.numUsersGoals}",
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.w600,
@@ -367,11 +366,11 @@ class _MyProviderState extends State<MyProvider> {
   getProvider() async {
     // log(list.toString());
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    list = await getProviderList(id: sharedPreferences.getString("id"));
+    list = await getProviderList(id: sharedPreferences.getString("id") ??"");
     if (list != null) {
       fetchProgramName();
     }
-    log(list.providers.length.toString());
+    log(list!.providers.length.toString());
     setState(() {
       isLoading = false;
     });
@@ -424,7 +423,7 @@ class _MyProviderState extends State<MyProvider> {
                   //getPercentager(index),
                   backgroundColor: Colors.grey,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    getColorOfBar(double.parse(list
+                    getColorOfBar(double.parse(list!
                         .providers[index].provider.userDetail.avgGoalChange)),
                   ),
                 ),
@@ -467,16 +466,12 @@ class _MyProviderState extends State<MyProvider> {
   double getPercentager(int index) {
     double activityPercent = 0;
     try {
-      if (list.providers[index].provider.userDetail.avgGoalChange == null) {
-        activityPercent = 0;
-      } else {
-        activityPercent = (double.parse(
-                    list.providers[index].provider.userDetail.avgGoalChange ??
-                        "0") *
-                25) /
-            100;
-      }
-    } catch (e) {
+      activityPercent = (double.parse(
+                  list!.providers[index].provider.userDetail.avgGoalChange ??
+                      "0") *
+              25) /
+          100;
+        } catch (e) {
       activityPercent = 0;
     }
     return activityPercent;
@@ -514,13 +509,16 @@ class _MyProviderState extends State<MyProvider> {
   }
 
   fetchProgramName() {
-    for (int i = 0; i < list.providers.length; i++) {
-      String name;
-      for (int j = 0; j < list.providers[i].programs.length; j++) {
-        if (name == null || list.providers[i].programs.length == 1) {
-          name = list.providers[i].programs[j].program.name;
+    if(list==null){
+      return;
+    }
+    for (int i = 0; i < list!.providers.length; i++) {
+      String name = "";
+      for (int j = 0; j < list!.providers[i].programs.length; j++) {
+        if (list!.providers[i].programs.length == 1) {
+          name = list!.providers[i].programs[j].program.name;
         } else {
-          name = name + "," + list.providers[i].programs[j].program.name;
+          name = name + "," + list!.providers[i].programs[j].program.name;
         }
       }
       programNames.add(name);

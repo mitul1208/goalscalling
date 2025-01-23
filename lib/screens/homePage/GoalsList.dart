@@ -1,6 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_searchabledropdown/apis/GoalsApi.dart';
 import 'package:flutter_searchabledropdown/apis/updateFcmTokenApi.dart';
@@ -16,22 +14,21 @@ import 'package:flutter_searchabledropdown/screens/goal_details/GoalDetailMain.d
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../main.dart';
 import '../notificationScreen/NotificationScreen.dart';
 
 class GoalsList extends StatefulWidget {
-  final String id;
+  final String? id;
   final bool showBackButton;
-  final String myTitle;
-  GoalsList({this.id, this.showBackButton = false, this.myTitle});
+  final String? myTitle;
+  GoalsList({this.id,this.showBackButton = false,this.myTitle});
 
   @override
   _GoalsListState createState() => _GoalsListState();
 }
 
 class _GoalsListState extends State<GoalsList> {
-  double width;
-  double height;
+  double width = 0;
+  double height = 0;
   final LocalAuthentication auth = LocalAuthentication();
   List<GoalModel> list = [];
   bool isLoading = true;
@@ -42,7 +39,7 @@ class _GoalsListState extends State<GoalsList> {
   List<String> goalScales = ['0', '1', '2', '3', '4'];
   String title = "";
 
-  Widget wdgt;
+  late Widget wdgt;
   @override
   void initState() {
     super.initState();
@@ -68,7 +65,7 @@ class _GoalsListState extends State<GoalsList> {
       title = "Home";
       wdgt = IconButton(
         onPressed: () {
-          _scaffoldKey.currentState.openDrawer();
+          _scaffoldKey.currentState!.openDrawer();
         },
         icon: Icon(
           Icons.menu,
@@ -110,7 +107,7 @@ class _GoalsListState extends State<GoalsList> {
                 ))
             : InkWell(
                 onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _scaffoldKey.currentState!.openDrawer();
                 },
                 child: Icon(
                   Icons.menu,
@@ -118,7 +115,7 @@ class _GoalsListState extends State<GoalsList> {
                 )),
         titleSpacing: 0,
         title: Text(
-          widget.myTitle == null ? "My Goals" : widget.myTitle + "'s Goals",
+          widget.myTitle == null ? "My Goals" : widget.myTitle.toString() + "'s Goals",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -183,7 +180,7 @@ class _GoalsListState extends State<GoalsList> {
                         width: 3,
                         thickness: 5,
                         color: getColorOfBar(double.parse(
-                            list[index].latestActivity?.activityRanking ??
+                            list[index].latestActivity.activityRanking ??
                                 "0")),
                       ),
                     ),
@@ -313,7 +310,7 @@ class _GoalsListState extends State<GoalsList> {
               fontWeight: FontWeight.w500),
         ),
         Text(
-          list[index].latestActivity?.dateOfActivity ?? "",
+          list[index].latestActivity.dateOfActivity ?? "",
           style: TextStyle(
               color: Colors.grey[600],
               fontSize: width * 0.035,
@@ -326,15 +323,11 @@ class _GoalsListState extends State<GoalsList> {
   double getPercentager(int index) {
     double activityPercent = 0;
     try {
-      if (list[index].latestActivity == null) {
-        activityPercent = 0;
-      } else {
-        activityPercent =
-            (double.parse(list[index].latestActivity?.activityRanking ?? "0") *
-                    25) /
-                100;
-      }
-    } catch (e) {
+      activityPercent =
+          (double.parse(list[index].latestActivity.activityRanking ?? "0") *
+                  25) /
+              100;
+        } catch (e) {
       activityPercent = 0;
     }
     return activityPercent;
@@ -367,7 +360,7 @@ class _GoalsListState extends State<GoalsList> {
                 backgroundColor: Colors.grey,
                 valueColor: AlwaysStoppedAnimation<Color>(
                   getColorOfBar(double.parse(
-                      list[index].latestActivity?.activityRanking ?? "0")),
+                      list[index].latestActivity.activityRanking ?? "0")),
                 ),
               ),
             ),
@@ -425,7 +418,7 @@ class _GoalsListState extends State<GoalsList> {
 
   getGoals() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    list = await goalApi(id: widget.id ?? sharedPreferences.getString("id"));
+    list = await goalApi(id: widget.id ?? sharedPreferences.getString("id") ?? "");
     setState(() {
       isLoading = false;
       isPoolToRefresh = false;
@@ -492,7 +485,7 @@ class _GoalsListState extends State<GoalsList> {
     });
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       print("on onLaunch");
-      Navigator.pushReplacement(myGlobals.scaffoldKey.currentContext,
+      Navigator.pushReplacement(myGlobals.scaffoldKey.currentContext!,
           MaterialPageRoute(builder: (
               BuildContext context,
               ) {

@@ -8,7 +8,7 @@ class ForgetPassWord extends StatefulWidget {
 }
 
 class _ForgetPassWordState extends State<ForgetPassWord> {
-  InAppWebViewController _webViewController;
+  InAppWebViewController? _webViewController;
   bool isLoading = true;
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _ForgetPassWordState extends State<ForgetPassWord> {
             onWebViewCreated: (InAppWebViewController controller) {
               _webViewController = controller;
             },
-            initialUrlRequest: URLRequest(url: Uri.parse("https://www.goalscaling.com/password/reset")),
+            initialUrlRequest: URLRequest(url: WebUri("https://www.goalscaling.com/password/reset")),
             onLoadStop: (controller, url) async {
               setState(() {
                 isLoading = false;

@@ -1,16 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_searchabledropdown/constants/SharedPrefs.dart';
 import 'package:flutter_searchabledropdown/screens/homePage/GoalsList.dart';
 import 'package:flutter_searchabledropdown/screens/loginScreen/loginscreen.dart';
 import 'package:flutter_searchabledropdown/screens/providerScreen/participant_page.dart';
 import 'package:flutter_searchabledropdown/screens/providerScreen/provider_page.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 import 'screens/notificationScreen/NotificationScreen.dart';
@@ -24,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   final LocalAuthentication auth = LocalAuthentication();
   bool isAuthenticated = false;
   bool isFirstTime = false;
-  String user;
+  late String user;
   @override
   void initState() {
     // TODO: implement initState
@@ -37,10 +33,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     user = await getString(key: "user");
     print(user);
     setState(() {});
-    if (user != null) {
-      checkAuthEnable();
-    }
-    if (user == "participant") {}
+    // checkAuthEnable();
+      if (user == "participant") {}
   }
 
   @override

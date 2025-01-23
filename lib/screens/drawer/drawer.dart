@@ -14,10 +14,10 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  double height;
-  double width;
+  double height = 0;
+  double width = 0;
   bool isLoading = false;
-  String name, email, image;
+  late String name, email, image;
   bool isValidUser = false;
   @override
   void initState() {

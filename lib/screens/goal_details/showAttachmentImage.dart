@@ -5,14 +5,14 @@ import '../../constants/imageConstants.dart';
 
 class ShowAttachmentImage extends StatefulWidget {
   final String showImage;
-  ShowAttachmentImage({this.showImage});
+  ShowAttachmentImage({required this.showImage});
   @override
   _ShowAttachmentImageState createState() => _ShowAttachmentImageState();
 }
 
 class _ShowAttachmentImageState extends State<ShowAttachmentImage> {
   bool isLoading = false;
-  String imageURl;
+  String? imageURl;
   PageController _pageController = PageController();
   int currentPage = 0;
 
@@ -35,7 +35,7 @@ class _ShowAttachmentImageState extends State<ShowAttachmentImage> {
                 maxWidth: MediaQuery.of(context).size.width * 0.7,
               ),
               child: CachedNetworkImage(
-                imageUrl: imageURl,
+                imageUrl: imageURl ?? "",
                 fit: BoxFit.contain,
                 // width: double.infinity,
                 placeholder: (BuildContext context, imageUrl) {

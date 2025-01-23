@@ -9,16 +9,16 @@ import '../../constants/colorConstants.dart';
 import '../../model/goalDetailsModel.dart';
 
 class ReplyDialog extends StatefulWidget {
-  Activities selectedActivity;
-  ReplyDialog({@required this.selectedActivity});
+  final Activities selectedActivity;
+  ReplyDialog({required this.selectedActivity});
   @override
   _ReplyDialogState createState() => _ReplyDialogState();
 }
 
 class _ReplyDialogState extends State<ReplyDialog> {
-  double height;
-  double width;
-  File selectedImage;
+  double height = 0;
+  double width = 0;
+  File? selectedImage;
 
   GlobalKey<FormState> _addActivityFormKey = GlobalKey<FormState>();
   bool isTextEditEnable = true;
@@ -89,7 +89,7 @@ class _ReplyDialogState extends State<ReplyDialog> {
             color: Colors.black,
             alignment: Alignment.center,
             child: Image.file(
-              selectedImage,
+              selectedImage ?? File(""),
               fit: BoxFit.fitHeight,
             ),
           ),
@@ -124,19 +124,19 @@ class _ReplyDialogState extends State<ReplyDialog> {
               fontWeight: FontWeight.w300),
           contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(8.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(8.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(8.0),
             ),
@@ -208,7 +208,7 @@ class _ReplyDialogState extends State<ReplyDialog> {
     );
   }
 
-  imageWithText({Function onTap, String text: "", IconData imagePath}) {
+  imageWithText({required onTap, String text= "", required IconData imagePath}) {
     return InkWell(
       onTap: onTap,
       child: Column(
@@ -269,7 +269,7 @@ class _ReplyDialogState extends State<ReplyDialog> {
       isTextEditEnable = false;
     });
 
-    if (_addActivityFormKey.currentState.validate()) {
+    if (_addActivityFormKey.currentState!.validate()) {
       bool isSuccess = await setGoalMessageReply(
           activityRanking: '',
           goalMessage: messageController.text,
@@ -286,7 +286,7 @@ class _ReplyDialogState extends State<ReplyDialog> {
     });
   }
 
-  Widget spaceBetween({double height: 10}) {
+  Widget spaceBetween({double height = 10}) {
     return SizedBox(
       height: 10,
     );

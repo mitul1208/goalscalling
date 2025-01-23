@@ -11,9 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 
-import '../model/goalDetailsModel.dart';
 
-Future<GoalDetailsModel> getGoalDetail({int index}) async {
+Future<GoalDetailsModel?> getGoalDetail({required int index}) async {
   Response response = await get(Uri.parse(GET_GOAL_DETAIL + '/' + (index).toString()),
       headers: {'Authorization': 'Bearer ' + await getToken()});
   print(response.statusCode);
@@ -29,12 +28,12 @@ Future<GoalDetailsModel> getGoalDetail({int index}) async {
 }
 
 Future<bool> setGoalMessageReply(
-    {String goalMessage,
-    String activityRanking,
-    Activities firstActivity,
-    File image}) async {
+    {required String goalMessage,
+    required String activityRanking,
+    required Activities firstActivity,
+    File? image}) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  String userId = sharedPreferences.getString("id");
+  String? userId = sharedPreferences.getString("id");
   var uri = Uri.parse(SET_GOAL_MESSAGE + (firstActivity.goalId).toString());
   var request = http.MultipartRequest('POST', uri);
   request.headers['Authorization'] = 'Bearer ' + await getToken();
@@ -48,11 +47,11 @@ Future<bool> setGoalMessageReply(
   request.fields['goal_id'] = (firstActivity.goalId.toString());
   request.fields['update_text'] = goalMessage;
   request.fields['activity_ranking'] = firstActivity.activityRanking;
-  request.fields['participant_id'] = userId;
+  request.fields['participant_id'] = userId ?? "";
   request.fields['date_of_activity'] = firstActivity.dateOfActivity;
   request.fields['parent_activity_id'] = firstActivity.id;
   request.fields['is_active'] = '1';
-  request.fields['created_by'] = userId;
+  request.fields['created_by'] = userId ?? "";
   request.fields['last_modified_by'] = firstActivity.lastModifiedBy;
   // send
   var response = await request.send();
@@ -67,12 +66,12 @@ Future<bool> setGoalMessageReply(
 }
 
 Future<bool> setGoalMessage(
-    {String goalMessage,
-    String activityRanking,
-    GoalDetail goalDetail,
-    File image}) async {
+    {required String goalMessage,
+    required String activityRanking,
+    required GoalDetail goalDetail,
+    File? image}) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  String userId = sharedPreferences.getString("id");
+  String? userId = sharedPreferences.getString("id");
   var uri = Uri.parse(SET_GOAL_MESSAGE + (goalDetail.id).toString());
   var request = http.MultipartRequest('POST', uri);
   request.headers['Authorization'] = 'Bearer ' + await getToken();
@@ -86,13 +85,13 @@ Future<bool> setGoalMessage(
   request.fields['goal_id'] = (goalDetail.id.toString());
   request.fields['update_text'] = goalMessage;
   request.fields['activity_ranking'] = activityRanking;
-  request.fields['participant_id'] = userId;
+  request.fields['participant_id'] = userId ?? "";
   request.fields['date_of_activity'] =
       getFullDateString(DateTime.now().toString());
   request.fields['parent_activity_id'] = '0';
   request.fields['is_active'] = '1';
-  request.fields['created_by'] = userId;
-  request.fields['last_modified_by'] = userId;
+  request.fields['created_by'] = userId ?? "";
+  request.fields['last_modified_by'] = userId ?? "";
   // send
   print('sending');
   var response = await request.send();

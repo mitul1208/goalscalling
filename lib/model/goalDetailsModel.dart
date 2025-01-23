@@ -1,35 +1,35 @@
 class GoalDetailsModel {
-  String status;
-  String msg;
-  List<Activities> activities;
-  GoalDetail goalDetail;
-  List<GraphData> graphData;
-  List<dynamic> xaxis;
-  List<dynamic> yaxis;
+  late final String status;
+  late final String msg;
+  late final List<Activities> activities;
+  late final GoalDetail goalDetail;
+  late final List<GraphData> graphData;
+  late final List<dynamic> xaxis;
+  late final List<dynamic> yaxis;
 
   GoalDetailsModel(
-      {this.status,
-        this.msg,
-        this.activities,
-        this.goalDetail,
-        this.graphData,
-        this.xaxis,
-        this.yaxis});
+      {required this.status,
+        required this.msg,
+        required this.activities,
+        required this.goalDetail,
+        required this.graphData,
+        required this.xaxis,
+        required this.yaxis});
 
   GoalDetailsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'].toString();
     msg = json['msg'].toString();
     if (json['activities'] != null) {
-      activities = new List<Activities>();
+      activities = [];
       json['activities'].forEach((v) {
         activities.add(new Activities.fromJson(v));
       });
     }
     goalDetail = json['goal_detail'] != null
         ? new GoalDetail.fromJson(json['goal_detail'])
-        : null;
+        : GoalDetail.fromJson({});
     if (json['graphData'] != null) {
-      graphData = new List<GraphData>();
+      graphData = [];
       json['graphData'].forEach((v) {
         graphData.add(new GraphData.fromJson(v));
       });
@@ -41,40 +41,40 @@ class GoalDetailsModel {
 }
 
 class Activities {
-  String id;
-  String goalId;
-  String updateText;
-  String activityRanking;
-  String participantId;
-  String dateOfActivity;
-  String parentActivityId;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  Owner owner;
-  List<ChildActivities> childActivities;
-  List<Attachments> attachments;
+  late final String id;
+  late final String goalId;
+  late final String updateText;
+  late final String activityRanking;
+  late final String participantId;
+  late final String dateOfActivity;
+  late final String parentActivityId;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
+  late final Owner owner;
+  late final List<ChildActivities> childActivities;
+  late final List<Attachments> attachments;
 
   Activities(
-      {this.id,
-        this.goalId,
-        this.updateText,
-        this.activityRanking,
-        this.participantId,
-        this.dateOfActivity,
-        this.parentActivityId,
-        this.isActive,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
-        this.owner,
-        this.childActivities,
-        this.attachments});
+      {required this.id,
+        required this.goalId,
+        required this.updateText,
+        required this.activityRanking,
+        required this.participantId,
+        required this.dateOfActivity,
+        required this.parentActivityId,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.owner,
+        required this.childActivities,
+        required this.attachments});
 
   Activities.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -90,15 +90,15 @@ class Activities {
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
     deletedAt = json['deleted_at'].toString();
-    owner = json['owner'] != null ? new Owner.fromJson(json['owner']) : null;
+    owner = json['owner'] != null ? Owner.fromJson(json['owner']) : Owner.fromJson({});
     if (json['child_activities'] != null) {
-      childActivities = new List<ChildActivities>();
+      childActivities = [];
       json['child_activities'].forEach((v) {
         childActivities.add(new ChildActivities.fromJson(v));
       });
     }
     if (json['attachments'] != null) {
-      attachments = new List<Attachments>();
+      attachments = [];
       json['attachments'].forEach((v) {
         attachments.add(new Attachments.fromJson(v));
       });
@@ -109,61 +109,61 @@ class Activities {
 }
 
 class Owner {
-  String id;
-  String image;
-  String logoImage;
-  String firstName;
-  String lastName;
-  String userTypeId;
-  String email;
-  String emailVerifiedAt;
-  String phone;
-  String address;
-  String city;
-  String stateId;
-  String zip;
-  String recordNum;
-  String organizationId;
-  String notes;
-  String lastLogin;
-  String isActive;
-  String inactiveDate;
-  String createdBy;
-  String lastModifiedBy;
-  String deviceToken;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  String fullName;
-  UserType userType;
+  late final String id;
+  late final String image;
+  late final String logoImage;
+  late final String firstName;
+  late final String lastName;
+  late final String userTypeId;
+  late final String email;
+  late final String emailVerifiedAt;
+  late final String phone;
+  late final String address;
+  late final String city;
+  late final String stateId;
+  late final String zip;
+  late final String recordNum;
+  late final String organizationId;
+  late final String notes;
+  late final String lastLogin;
+  late final String isActive;
+  late final String inactiveDate;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String deviceToken;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
+  late final String fullName;
+  late final UserType userType;
 
   Owner(
-      {this.id,
-        this.image,
-        this.logoImage,
-        this.firstName,
-        this.lastName,
-        this.userTypeId,
-        this.email,
-        this.emailVerifiedAt,
-        this.phone,
-        this.address,
-        this.city,
-        this.stateId,
-        this.zip,
-        this.recordNum,
-        this.organizationId,
-        this.notes,
-        this.lastLogin,
-        this.isActive,
-        this.inactiveDate,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.deviceToken,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
-        this.fullName,this.userType});
+      {required this.id,
+        required this.image,
+        required this.logoImage,
+        required this.firstName,
+        required this.lastName,
+        required this.userTypeId,
+        required this.email,
+        required this.emailVerifiedAt,
+        required this.phone,
+        required this.address,
+        required this.city,
+        required this.stateId,
+        required this.zip,
+        required this.recordNum,
+        required this.organizationId,
+        required this.notes,
+        required this.lastLogin,
+        required this.isActive,
+        required this.inactiveDate,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.deviceToken,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.fullName,required this.userType});
 
   Owner.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -194,30 +194,30 @@ class Owner {
     fullName = json['full_name'].toString();
        userType = json['user_type'] != null
         ? new UserType.fromJson(json['user_type'])
-        : null;
+        : UserType.fromJson({});
   }
 
 }
 
 class UserType {
-  String id;
-  String name;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  late final String id;
+  late final String name;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
 
   UserType(
-      {this.id,
-      this.name,
-      this.isActive,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt});
+      {required this.id,
+      required this.name,
+      required this.isActive,
+      required this.createdBy,
+      required this.lastModifiedBy,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.deletedAt});
 
   UserType.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -232,37 +232,37 @@ class UserType {
 
 }
 class ChildActivities {
-  String id;
-  String goalId;
-  String updateText;
-  String activityRanking;
-  String participantId;
-  String dateOfActivity;
-  String parentActivityId;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  Owner owner;
-List<Attachments> attachments;
+  late final String id;
+  late final String goalId;
+  late final String updateText;
+  late final String activityRanking;
+  late final String participantId;
+  late final String dateOfActivity;
+  late final String parentActivityId;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
+  late final Owner owner;
+  late final List<Attachments> attachments;
   ChildActivities(
-      {this.id,
-        this.goalId,
-        this.updateText,
-        this.activityRanking,
-        this.participantId,
-        this.dateOfActivity,
-        this.parentActivityId,
-        this.isActive,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.createdAt,
-        this.updatedAt,
-        this.owner,
-        this.deletedAt,
-        this.attachments});
+      {required this.id,
+        required this.goalId,
+        required this.updateText,
+        required this.activityRanking,
+        required this.participantId,
+        required this.dateOfActivity,
+        required this.parentActivityId,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.owner,
+        required this.deletedAt,
+        required this.attachments});
 
   ChildActivities.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -275,12 +275,12 @@ List<Attachments> attachments;
     isActive = json['is_active'].toString();
     createdBy = json['created_by'].toString();
     lastModifiedBy = json['last_modified_by'].toString();
-    owner = json['owner'] != null ? new Owner.fromJson(json['owner']) : null;
+    owner = json['owner'] != null ? new Owner.fromJson(json['owner']) : Owner.fromJson({});
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
     deletedAt = json['deleted_at'].toString();
        if (json['attachments'] != null) {
-      attachments = new List<Attachments>();
+      attachments = [];
       json['attachments'].forEach((v) {
         attachments.add(new Attachments.fromJson(v));
       });
@@ -290,26 +290,27 @@ List<Attachments> attachments;
 }
 
 class Attachments {
-  String id;
-  String name;
-  String goalActivityId;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  late final String id;
+  late final String name;
+  late final String goalActivityId;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
 
   Attachments(
-      {this.id,
-        this.name,
-        this.goalActivityId,
-        this.isActive,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt});
+      {
+        required this.id,
+        required this.name,
+        required this.goalActivityId,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt});
 
   Attachments.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -326,44 +327,45 @@ class Attachments {
 }
 
 class GoalDetail {
-  String id;
-  String name;
-  String goalStartDate;
-  String statusId;
-  String participantId;
-  String providerId;
-  String goalChange;
-  String lastActivityDate;
-  String goalClosedDate;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  String createdTimestamp;
-  List<Scales> scales;
-  List<Activities> activities;
+  late final String id;
+  late final String name;
+  late final String goalStartDate;
+  late final String statusId;
+  late final String participantId;
+  late final String providerId;
+  late final String goalChange;
+  late final String lastActivityDate;
+  late final String goalClosedDate;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
+  late final String createdTimestamp;
+  late final List<Scales> scales;
+  late final List<Activities> activities;
 
   GoalDetail(
-      {this.id,
-        this.name,
-        this.goalStartDate,
-        this.statusId,
-        this.participantId,
-        this.providerId,
-        this.goalChange,
-        this.lastActivityDate,
-        this.goalClosedDate,
-        this.isActive,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt,
-        this.createdTimestamp,
-        this.scales,
-        this.activities});
+      {
+        required this.id,
+        required this.name,
+        required this.goalStartDate,
+        required this.statusId,
+        required this.participantId,
+        required this.providerId,
+        required this.goalChange,
+        required this.lastActivityDate,
+        required this.goalClosedDate,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.createdTimestamp,
+        required this.scales,
+        required this.activities});
 
   GoalDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -383,13 +385,13 @@ class GoalDetail {
     deletedAt = json['deleted_at'].toString();
     createdTimestamp = json['created_timestamp'].toString();
     if (json['scales'] != null) {
-      scales = new List<Scales>();
+      scales =  [];
       json['scales'].forEach((v) {
         scales.add(new Scales.fromJson(v));
       });
     }
     if (json['activities'] != null) {
-      activities = new List<Activities>();
+      activities = [];
       json['activities'].forEach((v) {
         activities.add(new Activities.fromJson(v));
       });
@@ -399,30 +401,31 @@ class GoalDetail {
 }
 
 class Scales {
-  String id;
-  String goalId;
-  String value;
-  String name;
-  String description;
-  String isActive;
-  String createdBy;
-  String lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  late final String id;
+  late final String goalId;
+  late final String value;
+  late final String name;
+  late final String description;
+  late final String isActive;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
 
   Scales(
-      {this.id,
-        this.goalId,
-        this.value,
-        this.name,
-        this.description,
-        this.isActive,
-        this.createdBy,
-        this.lastModifiedBy,
-        this.createdAt,
-        this.updatedAt,
-        this.deletedAt});
+      {
+        required this.id,
+        required this.goalId,
+        required this.value,
+        required this.name,
+        required this.description,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt});
 
   Scales.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
@@ -438,16 +441,16 @@ class Scales {
     deletedAt = json['deleted_at'].toString();
   }
 
- 
+
 }
 
 class GraphData {
-  String y;
-  String color;
-  String name;
-  String toolInfo;
+  late final String y;
+  late final String color;
+  late final String name;
+  late final String toolInfo;
 
-  GraphData({this.y, this.color, this.name, this.toolInfo});
+  GraphData({required this.y,required this.color,required this.name,required this.toolInfo});
 
   GraphData.fromJson(Map<String, dynamic> json) {
     y = json['y'].toString();

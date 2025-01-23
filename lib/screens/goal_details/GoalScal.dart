@@ -4,13 +4,13 @@ import 'package:flutter_searchabledropdown/model/goalDetailsModel.dart';
 
 class GoalScaling extends StatefulWidget {
   final List<Scales> scalList;
-  GoalScaling({this.scalList});
+  GoalScaling({required this.scalList});
   @override
   _GoalScalingState createState() => _GoalScalingState();
 }
 
 class _GoalScalingState extends State<GoalScaling> {
-  List<Scales> scalLists;
+  List<Scales> scalLists = [];
   List<String> itemList = [
     "4th scale",
     "3rd scale",
@@ -38,7 +38,7 @@ class _GoalScalingState extends State<GoalScaling> {
     );
   }
 
-  _goalCard({String index, String text}) {
+  _goalCard({required String index,required String text}) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.03,

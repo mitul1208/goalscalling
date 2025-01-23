@@ -1,15 +1,15 @@
 class ProviderListModel {
-  int status;
-  String msg;
-  List<Providers> providers;
+  late final int status;
+  late final String msg;
+  late final List<Providers> providers;
 
-  ProviderListModel({this.status, this.msg, this.providers});
+  ProviderListModel({required this.status,required this.msg,required this.providers});
 
   ProviderListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['providers'] != null) {
-      providers = new List<Providers>();
+      providers = [];
       json['providers'].forEach((v) {
         providers.add(new Providers.fromJson(v));
       });
@@ -20,40 +20,39 @@ class ProviderListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['msg'] = this.msg;
-    if (this.providers != null) {
-      data['providers'] = this.providers.map((v) => v.toJson()).toList();
-    }
-    return data;
+    data['providers'] = this.providers.map((v) => v.toJson()).toList();
+      return data;
   }
 }
 
 class Providers {
-  int id;
-  int providerId;
-  int supervisorId;
-  int programId;
-  String isActive;
-  int createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int id;
+  late final int providerId;
+  late final int supervisorId;
+  late final int programId;
+  late final String isActive;
+  late final int createdBy;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
-  List<Programs> programs;
-  Provider provider;
+  late final List<Programs> programs;
+  late final Provider provider;
 
   Providers(
-      {this.id,
-      this.providerId,
-      this.supervisorId,
-      this.programId,
-      this.isActive,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.programs,
-      this.provider});
+      {
+        required this.id,
+        required this.providerId,
+        required this.supervisorId,
+        required this.programId,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.programs,
+        required this.provider});
 
   Providers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -67,14 +66,14 @@ class Providers {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     if (json['programs'] != null) {
-      programs = new List<Programs>();
+      programs = [];
       json['programs'].forEach((v) {
         programs.add(new Programs.fromJson(v));
       });
     }
-    provider = json['provider'] != null
+    provider = (json['provider'] != null
         ? new Provider.fromJson(json['provider'])
-        : null;
+        : Provider.fromJson({}));
   }
 
   Map<String, dynamic> toJson() {
@@ -89,37 +88,33 @@ class Providers {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
-    if (this.programs != null) {
-      data['programs'] = this.programs.map((v) => v.toJson()).toList();
-    }
-    if (this.provider != null) {
-      data['provider'] = this.provider.toJson();
-    }
-    return data;
+    data['programs'] = this.programs.map((v) => v.toJson()).toList();
+    data['provider'] = this.provider.toJson();
+      return data;
   }
 }
 
 class Programs {
-  int id;
-  int programId;
-  int providerId;
+  late final int id;
+  late final int programId;
+  late final int providerId;
   Null createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
-  Program program;
+  late final Program program;
 
   Programs(
-      {this.id,
-      this.programId,
-      this.providerId,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
+      {required this.id,
+        required this.programId,
+        required this.providerId,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
       this.deletedAt,
-      this.program});
+        required this.program});
 
   Programs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -131,7 +126,7 @@ class Programs {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     program =
-        json['program'] != null ? new Program.fromJson(json['program']) : null;
+        json['program'] != null ? new Program.fromJson(json['program']) : Program.fromJson({});
   }
 
   Map<String, dynamic> toJson() {
@@ -144,55 +139,53 @@ class Programs {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
-    if (this.program != null) {
-      data['program'] = this.program.toJson();
-    }
-    return data;
+    data['program'] = this.program.toJson();
+      return data;
   }
 }
 
 class Program {
-  int id;
-  String image;
-  String name;
-  int organizationId;
+  late final int id;
+  late final String image;
+  late final String name;
+  late final int organizationId;
   Null contactEmail;
   Null contactPhone;
   Null address;
   Null city;
   Null stateId;
   Null zip;
-  int countryId;
+  late final int countryId;
   Null notes;
-  String dateAdded;
+  late final String dateAdded;
   Null recordNum;
-  String isActive;
+  late final String isActive;
   Null createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
 
   Program(
-      {this.id,
-      this.image,
-      this.name,
-      this.organizationId,
+      {required this.id,
+        required this.image,
+        required this.name,
+        required this.organizationId,
       this.contactEmail,
       this.contactPhone,
       this.address,
       this.city,
       this.stateId,
       this.zip,
-      this.countryId,
+        required this.countryId,
       this.notes,
-      this.dateAdded,
+        required this.dateAdded,
       this.recordNum,
-      this.isActive,
+        required this.isActive,
       this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
       this.deletedAt});
 
   Program.fromJson(Map<String, dynamic> json) {
@@ -245,64 +238,65 @@ class Program {
 }
 
 class Provider {
-  int id;
-  String image;
-  String logoImage;
-  String firstName;
-  String lastName;
-  int userTypeId;
-  String email;
+  late final int id;
+  late final String image;
+  late final String logoImage;
+  late final String firstName;
+  late final String lastName;
+  late final int userTypeId;
+  late final String email;
   Null emailVerifiedAt;
-  String phone;
-  String address;
-  String city;
-  int stateId;
-  String zip;
+  late final String phone;
+  late final String address;
+  late final String city;
+  late final int stateId;
+  late final String zip;
   Null ethnicity;
-  String recordNum;
-  int organizationId;
+  late final String recordNum;
+  late final int organizationId;
   Null notes;
-  String lastLogin;
-  String isActive;
+  late final String lastLogin;
+  late final String isActive;
   Null inactiveDate;
-  int createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int createdBy;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
-  String deviceToken;
-  String fullName;
-  UserDetail userDetail;
+  late final String deviceToken;
+  late final String fullName;
+  late final UserDetail userDetail;
 
   Provider(
-      {this.id,
-      this.image,
-      this.logoImage,
-      this.firstName,
-      this.lastName,
-      this.userTypeId,
-      this.email,
+      {
+        required this.id,
+        required this.image,
+        required this.logoImage,
+        required this.firstName,
+        required this.lastName,
+        required this.userTypeId,
+        required this.email,
       this.emailVerifiedAt,
-      this.phone,
-      this.address,
-      this.city,
-      this.stateId,
-      this.zip,
+        required this.phone,
+        required this.address,
+        required this.city,
+        required this.stateId,
+        required this.zip,
       this.ethnicity,
-      this.recordNum,
-      this.organizationId,
+        required this.recordNum,
+        required this.organizationId,
       this.notes,
-      this.lastLogin,
-      this.isActive,
+        required this.lastLogin,
+        required this.isActive,
       this.inactiveDate,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
       this.deletedAt,
-      this.deviceToken,
-      this.fullName,
-      this.userDetail});
+        required this.deviceToken,
+        required this.fullName,
+        required this.userDetail});
 
   Provider.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -334,7 +328,7 @@ class Provider {
     fullName = json['full_name'];
     userDetail = json['user_detail'] != null
         ? new UserDetail.fromJson(json['user_detail'])
-        : null;
+        : UserDetail.fromJson({});
   }
 
   Map<String, dynamic> toJson() {
@@ -366,49 +360,47 @@ class Provider {
     data['deleted_at'] = this.deletedAt;
     data['device_token'] = this.deviceToken;
     data['full_name'] = this.fullName;
-    if (this.userDetail != null) {
-      data['user_detail'] = this.userDetail.toJson();
-    }
-    return data;
+    data['user_detail'] = this.userDetail.toJson();
+      return data;
   }
 }
 
 class UserDetail {
-  int id;
+  late final int id;
   Null gender;
-  int userId;
+  late final int userId;
   Null dob;
-  int programId;
+  late final int programId;
   Null providerId;
-  int providerTypeId;
-  int numUsers;
-  int numProviders;
-  int numGoals;
-  int numUsersGoals;
-  String avgGoalChange;
-  int createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int providerTypeId;
+  late final int numUsers;
+  late final int numProviders;
+  late final int numGoals;
+  late final int numUsersGoals;
+  late final String avgGoalChange;
+  late final int createdBy;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
 
   UserDetail(
-      {this.id,
+      {required this.id,
       this.gender,
-      this.userId,
+        required this.userId,
       this.dob,
-      this.programId,
+        required this.programId,
       this.providerId,
-      this.providerTypeId,
-      this.numUsers,
-      this.numProviders,
-      this.numGoals,
-      this.numUsersGoals,
-      this.avgGoalChange,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
+        required this.providerTypeId,
+        required this.numUsers,
+        required this.numProviders,
+        required this.numGoals,
+        required this.numUsersGoals,
+        required this.avgGoalChange,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
       this.deletedAt});
 
   UserDetail.fromJson(Map<String, dynamic> json) {

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_searchabledropdown/apis/loginApi.dart';
 import 'package:flutter_searchabledropdown/common/circleularIndicator.dart';
@@ -22,8 +21,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  double height;
-  double width;
+  double height = 0;
+  double width = 0;
   final _formKey = GlobalKey<FormState>();
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
@@ -145,19 +144,19 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.amber, fontSize: width * 0.035, fontWeight: FontWeight.w300),
           contentPadding: EdgeInsets.only(top: -10, bottom: -10, left: 15),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           border: new OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+            borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
             borderRadius: const BorderRadius.all(
               const Radius.circular(20.0),
             ),
@@ -195,19 +194,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.w300),
             contentPadding: EdgeInsets.only(top: 20, bottom: -10, left: 15),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+              borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
               borderRadius: const BorderRadius.all(
                 const Radius.circular(20.0),
               ),
             ),
             border: new OutlineInputBorder(
-              borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+              borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
               borderRadius: const BorderRadius.all(
                 const Radius.circular(20.0),
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 0, color: Colors.grey[400]),
+              borderSide: BorderSide(width: 0, color: Colors.grey[400]!),
               borderRadius: const BorderRadius.all(
                 const Radius.circular(20.0),
               ),

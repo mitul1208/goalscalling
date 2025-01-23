@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../screens/notificationScreen/NotificationScreen.dart';
 
 
 handleForegroundMessage() {
@@ -19,7 +16,7 @@ handleForegroundMessage() {
               message.notification?.android?.imageUrl != null) ||
               (message.notification?.apple != null &&
                   message.notification?.apple?.imageUrl != null))) {
-        LocalNotificationService().displayNotificationWithImage(message);
+        // LocalNotificationService().displayNotificationWithImage(message);
         print('Message also contained a notification: ${message.notification}');
       } else if (message.notification != null) {
         LocalNotificationService().displayNotification(message);
@@ -35,25 +32,17 @@ class LocalNotificationService {
   static void initialize() async {
     InitializationSettings initializationSettings = const InitializationSettings(
       android: AndroidInitializationSettings("app_icon"),
-      iOS: IOSInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
-        defaultPresentBadge: true,
-        defaultPresentAlert: true,
-        defaultPresentSound: true,
-      ),
     );
-    _notificationPlugin.initialize(initializationSettings,
-        onSelectNotification: (payload) {
-          if (payload != null) {
-            Navigator.pushReplacement(Get.context, MaterialPageRoute(builder: (
-                  BuildContext context,
-                ) {
-                  return NotificationScreen();
-                }));
-
-          }});
+    // _notificationPlugin.initialize(initializationSettings,
+    //     onSelectNotification: (payload) {
+    //       if (payload != null) {
+    //         Navigator.pushReplacement(Get.context, MaterialPageRoute(builder: (
+    //               BuildContext context,
+    //             ) {
+    //               return NotificationScreen();
+    //             }));
+    //
+    //       }});
     await _notificationPlugin.cancelAll();
   }
 
@@ -66,46 +55,47 @@ class LocalNotificationService {
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker'),
-        iOS: IOSNotificationDetails(
-            presentSound: true,
-            presentBadge: true, presentAlert: true));
+        // iOS: IOSNotificationDetails(
+        //     presentSound: true,
+        //     presentBadge: true, presentAlert: true)
+    );
     print(message.data);
     _notificationPlugin.show(id, message.notification?.title,
         message.notification?.body, notificationDetails,
         payload: "");
   }
 
-  void displayNotificationWithImage(RemoteMessage message) async {
-    final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    final String bigPicturePath = await _downloadAndSaveFile(
-        Platform.isIOS
-            ? message.notification.apple.imageUrl??""
-            : message.notification.android.imageUrl??"",
-        'bigPicture');
-    var bigPictureStyleInformation = BigPictureStyleInformation(
-      FilePathAndroidBitmap(bigPicturePath),
-      contentTitle: message.notification?.title,
-      summaryText: message.notification?.body,
-      hideExpandedLargeIcon: true,
-    );
-    final NotificationDetails notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails('dairyBcs', 'general_notification',
-            enableVibration: true,
-            playSound: true,
-            styleInformation: bigPictureStyleInformation,
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker'),
-        iOS: IOSNotificationDetails(
-            presentSound: true,
-            presentBadge: true,
-            presentAlert: true,
-            attachments: [IOSNotificationAttachment(bigPicturePath)]));
-    print(message.data);
-    _notificationPlugin.show(id, message.notification?.title,
-        message.notification?.body, notificationDetails,
-        payload: message.data.toString());
-  }
+  // void displayNotificationWithImage(RemoteMessage message) async {
+  //   final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  //   final String bigPicturePath = await _downloadAndSaveFile(
+  //       Platform.isIOS
+  //           ? message.notification.apple.imageUrl??""
+  //           : message.notification.android.imageUrl??"",
+  //       'bigPicture');
+  //   var bigPictureStyleInformation = BigPictureStyleInformation(
+  //     FilePathAndroidBitmap(bigPicturePath),
+  //     contentTitle: message.notification?.title,
+  //     summaryText: message.notification?.body,
+  //     hideExpandedLargeIcon: true,
+  //   );
+  //   final NotificationDetails notificationDetails = NotificationDetails(
+  //       android: AndroidNotificationDetails('dairyBcs', 'general_notification',
+  //           enableVibration: true,
+  //           playSound: true,
+  //           styleInformation: bigPictureStyleInformation,
+  //           importance: Importance.max,
+  //           priority: Priority.high,
+  //           ticker: 'ticker'),
+  //       iOS: IOSNotificationDetails(
+  //           presentSound: true,
+  //           presentBadge: true,
+  //           presentAlert: true,
+  //           attachments: [IOSNotificationAttachment(bigPicturePath)]));
+  //   print(message.data);
+  //   _notificationPlugin.show(id, message.notification?.title,
+  //       message.notification?.body, notificationDetails,
+  //       payload: message.data.toString());
+  // }
 }
 
 handleOnTapMessageWhenClose(message) {

@@ -68,7 +68,7 @@ Future<bool> updateUserData( {first_name, last_name, email, phone}) async {
 }
 
 Future<bool> uploadProfileImage(
-    {File image, first_name, last_name, email, phone}) async {
+    {File? image, first_name, last_name, email, phone}) async {
   // if (await checkInternet() == false) {
   //   showToastMessage('No Internet');
   //   return false;

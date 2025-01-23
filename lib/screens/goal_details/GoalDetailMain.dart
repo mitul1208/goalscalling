@@ -9,16 +9,16 @@ import 'package:flutter_searchabledropdown/screens/goal_details/GoalScal.dart';
 class GoalDetailMain extends StatefulWidget {
   final int index;
   final String title;
-  GoalDetailMain({this.index, this.title});
+  GoalDetailMain({required this.index,required this.title});
   @override
   _GoalDetailMainState createState() => _GoalDetailMainState();
 }
 
 class _GoalDetailMainState extends State<GoalDetailMain>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  late TabController _controller;
   int _selectedIndex = 0;
-  GoalDetailsModel goalDetailsModel;
+  GoalDetailsModel? goalDetailsModel;
   bool isLoading = true;
   List<Widget> tabList = [Tab(text: "Goal Activity"), Tab(text: "Goal Scale")];
 
@@ -47,10 +47,10 @@ class _GoalDetailMainState extends State<GoalDetailMain>
           titleSpacing: 0,
           centerTitle: false,
           title: widget.title == "" && goalDetailsModel != null
-              ? goalDetailsModel.goalDetail.name.length > 30
+              ? goalDetailsModel!.goalDetail.name.length > 30
                   ? Text(
-                      goalDetailsModel.goalDetail.name.substring(0, 25) + "....")
-                  : Text(goalDetailsModel.goalDetail.name)
+                      goalDetailsModel!.goalDetail.name.substring(0, 25) + "....")
+                  : Text(goalDetailsModel!.goalDetail.name)
               : widget.title.length > 30
                   ? Text(widget.title.substring(0, 25) + "....")
                   : Text(widget.title),
@@ -86,14 +86,14 @@ class _GoalDetailMainState extends State<GoalDetailMain>
           isLoading
               ? circularProgress()
               : GoalDetails(
-                  goalDetailsModel: goalDetailsModel,
+                  goalDetailsModel: goalDetailsModel!,
                   index: widget.index,
             title: widget.title,
                 ),
           isLoading
               ? circularProgress()
               : GoalScaling(
-                  scalList: goalDetailsModel.goalDetail.scales,
+                  scalList: goalDetailsModel!.goalDetail.scales,
                 ),
         ],
       ),

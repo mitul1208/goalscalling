@@ -1,17 +1,16 @@
-import 'package:flutter_searchabledropdown/model/ProviderList.dart';
 
 class ParticipantListModel {
-  int status;
-  String msg;
-  List<Participants> participants;
+  late final int status;
+  late final String msg;
+  late final List<Participants> participants;
 
-  ParticipantListModel({this.status, this.msg, this.participants});
+  ParticipantListModel({required this.status,required this.msg,required this.participants});
 
   ParticipantListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['participants'] != null) {
-      participants = new List<Participants>();
+      participants = [];
       json['participants'].forEach((v) {
         participants.add(new Participants.fromJson(v));
       });
@@ -22,38 +21,37 @@ class ParticipantListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['msg'] = this.msg;
-    if (this.participants != null) {
-      data['participants'] = this.participants.map((v) => v.toJson()).toList();
-    }
-    return data;
+    data['participants'] = this.participants.map((v) => v.toJson()).toList();
+      return data;
   }
 }
 
 class Participants {
-  int id;
-  int participantId;
-  int providerId;
-  int programId;
-  String isActive;
-  int createdBy;
-  Null lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  Null deletedAt;
-  Participant participant;
+  late final int id;
+  late final int participantId;
+  late final int providerId;
+  late final int programId;
+  late final String isActive;
+  late final int createdBy;
+  String? lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  String? deletedAt;
+  late final Participant participant;
 
   Participants(
-      {this.id,
-      this.participantId,
-      this.providerId,
-      this.programId,
-      this.isActive,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
+      {
+        required this.id,
+        required this.participantId,
+        required this.providerId,
+        required this.programId,
+        required this.isActive,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
       this.deletedAt,
-      this.participant});
+        required this.participant});
 
   Participants.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,7 +66,7 @@ class Participants {
     deletedAt = json['deleted_at'];
     participant = json['participant'] != null
         ? new Participant.fromJson(json['participant'])
-        : null;
+        : Participant.fromJson({});
   }
 
   Map<String, dynamic> toJson() {
@@ -83,72 +81,71 @@ class Participants {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
-    if (this.participant != null) {
-      data['participant'] = this.participant.toJson();
-    }
-    return data;
+    data['participant'] = this.participant.toJson();
+      return data;
   }
 }
 
 class Participant {
-  int id;
-  String image;
-  String logoImage;
-  String firstName;
-  String lastName;
-  int userTypeId;
-  String email;
-  String emailVerifiedAt;
-  String phone;
-  String address;
-  String city;
-  int stateId;
-  String zip;
-  String ethnicity;
-  String recordNum;
-  int organizationId;
-  String notes;
-  String lastLogin;
-  String isActive;
-  String inactiveDate;
-  int createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
+  late final int id;
+  late final String image;
+  late final String logoImage;
+  late final String firstName;
+  late final String lastName;
+  late final int userTypeId;
+  late final String email;
+  late final String emailVerifiedAt;
+  late final String phone;
+  late final String address;
+  late final String city;
+  late final int stateId;
+  late final String zip;
+  late final String ethnicity;
+  late final String recordNum;
+  late final int organizationId;
+  late final String notes;
+  late final String lastLogin;
+  late final String isActive;
+  late final String inactiveDate;
+  late final int createdBy;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
   Null deletedAt;
-  String deviceToken;
-  String fullName;
-  UserDetail userDetail;
+  late final String deviceToken;
+  late final String fullName;
+  late final UserDetail userDetail;
 
   Participant(
-      {this.id,
-      this.image,
-      this.logoImage,
-      this.firstName,
-      this.lastName,
-      this.userTypeId,
-      this.email,
-      this.emailVerifiedAt,
-      this.phone,
-      this.address,
-      this.city,
-      this.stateId,
-      this.zip,
-      this.ethnicity,
-      this.recordNum,
-      this.organizationId,
-      this.notes,
-      this.lastLogin,
-      this.isActive,
-      this.inactiveDate,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.deviceToken,
-      this.fullName,
-      this.userDetail});
+      {
+       required this.id,
+        required this.image,
+        required this.logoImage,
+        required this.firstName,
+        required this.lastName,
+        required this.userTypeId,
+        required this.email,
+        required this.emailVerifiedAt,
+        required this.phone,
+        required this.address,
+        required this.city,
+        required this.stateId,
+        required this.zip,
+        required this.ethnicity,
+        required this.recordNum,
+        required this.organizationId,
+        required this.notes,
+        required this.lastLogin,
+        required this.isActive,
+        required this.inactiveDate,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.deviceToken,
+        required this.fullName,
+        required this.userDetail});
 
   Participant.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -180,7 +177,7 @@ class Participant {
     fullName = json['full_name'];
     userDetail = json['user_detail'] != null
         ? new UserDetail.fromJson(json['user_detail'])
-        : null;
+        : UserDetail.fromJson({});
   }
 
   Map<String, dynamic> toJson() {
@@ -212,50 +209,49 @@ class Participant {
     data['deleted_at'] = this.deletedAt;
     data['device_token'] = this.deviceToken;
     data['full_name'] = this.fullName;
-    if (this.userDetail != null) {
-      data['user_detail'] = this.userDetail.toJson();
-    }
-    return data;
+    data['user_detail'] = this.userDetail.toJson();
+      return data;
   }
 }
 
 class UserDetail {
-  int id;
-  String gender;
-  int userId;
-  String dob;
-  String programId;
-  String providerId;
-  int providerTypeId;
-  String numUsers;
-  String numProviders;
-  String numGoals;
-  int numUsersGoals;
-  String avgGoalChange;
-  int createdBy;
-  int lastModifiedBy;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
+  late final int id;
+  late final String gender;
+  late final int userId;
+  late final String dob;
+  late final String programId;
+  late final String providerId;
+  late final int providerTypeId;
+  late final String numUsers;
+  late final String numProviders;
+  late final String numGoals;
+  late final int numUsersGoals;
+  late final String avgGoalChange;
+  late final int createdBy;
+  late final int lastModifiedBy;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
 
   UserDetail(
-      {this.id,
-      this.gender,
-      this.userId,
-      this.dob,
-      this.programId,
-      this.providerId,
-      this.providerTypeId,
-      this.numUsers,
-      this.numProviders,
-      this.numGoals,
-      this.numUsersGoals,
-      this.avgGoalChange,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt});
+      {
+        required this.id,
+        required this.gender,
+        required this.userId,
+        required this.dob,
+        required this.programId,
+        required this.providerId,
+        required this.providerTypeId,
+        required this.numUsers,
+        required this.numProviders,
+        required this.numGoals,
+        required this.numUsersGoals,
+        required this.avgGoalChange,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt});
 
   UserDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];

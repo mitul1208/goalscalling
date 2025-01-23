@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_searchabledropdown/apis/ProviderApi.dart';
 import 'package:flutter_searchabledropdown/constants/SharedPrefs.dart';
 import 'package:flutter_searchabledropdown/model/participentList.dart';
@@ -13,23 +14,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MyParticipants extends StatefulWidget {
   final bool showBackButton;
-  final String id;
-  final String myTitle;
+  final String? id;
+  final String? myTitle;
   MyParticipants({this.id, this.showBackButton = false, this.myTitle});
   @override
   _MyParticipantsState createState() => _MyParticipantsState();
 }
 
 class _MyParticipantsState extends State<MyParticipants> {
-  ParticipantListModel list;
+  ParticipantListModel? list;
   bool isLoading = true;
-  double width;
-  double height;
+  double width = 0;
+  double height = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final LocalAuthentication auth = LocalAuthentication();
   List<String> goalScales = ['0', '1', '2', '3', '4'];
   String title = "";
-  Widget wdgt;
+  Widget? wdgt;
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _MyParticipantsState extends State<MyParticipants> {
       title = "Home";
       wdgt = IconButton(
         onPressed: () {
-          _scaffoldKey.currentState.openDrawer();
+          _scaffoldKey.currentState!.openDrawer();
         },
         icon: Icon(
           Icons.menu,
@@ -102,13 +103,12 @@ class _MyParticipantsState extends State<MyParticipants> {
       key: _scaffoldKey,
       drawer: DrawerScreen(),
       appBar: AppBar(
-          brightness: Brightness.dark,
           titleSpacing: 0,
           centerTitle: false,
           title: Text(
             widget.myTitle == null
                 ? "My Participants"
-                : widget.myTitle + "'s Participants",
+                : widget.myTitle.toString() + "'s Participants",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -124,19 +124,19 @@ class _MyParticipantsState extends State<MyParticipants> {
                   ))
               : InkWell(
                   onTap: () {
-                    _scaffoldKey.currentState.openDrawer();
+                    _scaffoldKey.currentState!.openDrawer();
                   },
                   child: Icon(
                     Icons.menu,
                     color: Colors.black,
-                  ))),
+                  )), systemOverlayStyle: SystemUiOverlayStyle.light),
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
               padding: EdgeInsets.only(top: 20, bottom: 10),
-              itemCount: list.participants.length,
+              itemCount: list!.participants.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
@@ -144,10 +144,10 @@ class _MyParticipantsState extends State<MyParticipants> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => GoalsList(
-                                id: list.participants[index].participantId
+                                id: list!.participants[index].participantId
                                     .toString(),
                                 showBackButton: true,
-                                myTitle: list
+                                myTitle: list!
                                     .participants[index].participant.firstName,
                               )),
                     );
@@ -190,7 +190,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                                   CircleAvatar(
                                     backgroundColor: Colors.white,
                                     radius: 25.0,
-                                    backgroundImage: NetworkImage(list
+                                    backgroundImage: NetworkImage(list!
                                         .participants[index].participant.image),
                                   ),
                                   SizedBox(
@@ -202,7 +202,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        list.participants[index].participant
+                                        list!.participants[index].participant
                                             .fullName,
                                         style: TextStyle(
                                           fontSize: width * 0.043,
@@ -221,7 +221,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Text(
-                                            " : ${list.participants[index].participant.userDetail.numUsersGoals} |",
+                                            " : ${list!.participants[index].participant.userDetail.numUsersGoals} |",
                                             style: TextStyle(
                                                 fontSize: 12.0,
                                                 color: Colors.grey,
@@ -239,7 +239,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                                               " : " +
                                                   DateFormat('MMM-dd, yyyy')
                                                       .format(DateTime.parse(
-                                                          list
+                                                          list!
                                                               .participants[
                                                                   index]
                                                               .participant
@@ -269,7 +269,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                           width: 25.0,
                           height: double.infinity,
                           decoration: BoxDecoration(
-                            color: list.participants[index].isActive == "1"
+                            color: list!.participants[index].isActive == "1"
                                 ? Colors.green
                                 : Colors.red,
                             borderRadius: BorderRadius.only(
@@ -288,7 +288,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                                 RotatedBox(
                                   quarterTurns: -1,
                                   child: Text(
-                                    list.participants[index].isActive == "1"
+                                    list!.participants[index].isActive == "1"
                                         ? "ACTIVE"
                                         : "INACTIVE",
                                     style: TextStyle(
@@ -313,7 +313,7 @@ class _MyParticipantsState extends State<MyParticipants> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     // print(sharedPreferences.getString("id"));
     list = await getParticipantApi(
-        id: widget.id ?? sharedPreferences.getString("id"));
+        id: widget.id ?? sharedPreferences.getString("id") ??"");
     setState(() {
       isLoading = false;
     });
@@ -346,7 +346,7 @@ class _MyParticipantsState extends State<MyParticipants> {
                 value: getPercentager(index),
                 backgroundColor: Colors.grey,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  getColorOfBar(double.parse(list.participants[index]
+                  getColorOfBar(double.parse(list!.participants[index]
                       .participant.userDetail.avgGoalChange)),
                 ),
               ),
@@ -390,17 +390,12 @@ class _MyParticipantsState extends State<MyParticipants> {
   double getPercentager(int index) {
     double activityPercent = 0;
     try {
-      if (list.participants[index].participant.userDetail.avgGoalChange ==
-          null) {
-        activityPercent = 0;
-      } else {
-        activityPercent = (double.parse(list.participants[index].participant
-                        .userDetail.avgGoalChange ??
-                    "0") *
-                25) /
-            100;
-      }
-    } catch (e) {
+      activityPercent = (double.parse(list!.participants[index].participant
+                      .userDetail.avgGoalChange ??
+                  "0") *
+              25) /
+          100;
+        } catch (e) {
       activityPercent = 0;
     }
     return activityPercent;

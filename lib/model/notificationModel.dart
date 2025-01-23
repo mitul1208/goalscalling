@@ -1,30 +1,31 @@
 class NotificationsModel {
-  String eventId;
-  String eventType;
-  String eventName;
-  String notificationTitle;
-  String notificationBody;
-  UserFrom from;
-  String to;
-  String goalId;
-  String goalActivityId;
-  String createdAt;
-  String updatedAt;
-  String sentAt;
+  late final String eventId;
+  late final String eventType;
+  late final String eventName;
+  late final String notificationTitle;
+  late final String notificationBody;
+  late final UserFrom from;
+  late final String to;
+  late final String goalId;
+  late final String goalActivityId;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String sentAt;
 
   NotificationsModel(
-      {this.eventId,
-      this.eventType,
-      this.eventName,
-      this.notificationTitle,
-      this.notificationBody,
-      this.from,
-      this.to,
-      this.goalId,
-      this.goalActivityId,
-      this.createdAt,
-      this.updatedAt,
-      this.sentAt});
+      {
+        required this.eventId,
+        required this.eventType,
+        required this.eventName,
+        required this.notificationTitle,
+        required this.notificationBody,
+        required this.from,
+        required this.to,
+        required this.goalId,
+        required this.goalActivityId,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.sentAt});
 
   NotificationsModel.fromJson(Map<String, dynamic> json) {
     eventId = json['event_id'].toString();
@@ -39,65 +40,66 @@ class NotificationsModel {
     createdAt = json['created_at'].toString();
     updatedAt = json['updated_at'].toString();
     sentAt = json['sent_at'].toString();
-    from = json['from'] != null ? new UserFrom.fromJson(json['from']) : null;
+    from = json['from'] != null ? new UserFrom.fromJson(json['from']) : UserFrom.fromJson({});
   }
 }
 
 class UserFrom {
-  String id;
-  String image;
-  String logoImage;
-  String firstName;
-  String lastName;
-  String userTypeId;
-  String email;
-  String emailVerifiedAt;
-  String phone;
-  String address;
-  String city;
-  String stateId;
-  String zip;
-  String recordNum;
-  String organizationId;
-  String notes;
-  String lastLogin;
-  String isActive;
-  String inactiveDate;
-  String createdBy;
-  String lastModifiedBy;
-  String deviceToken;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  String fullName;
+  late final String id;
+  late final String image;
+  late final String logoImage;
+  late final String firstName;
+  late final String lastName;
+  late final String userTypeId;
+  late final String email;
+  late final String emailVerifiedAt;
+  late final String phone;
+  late final String address;
+  late final String city;
+  late final String stateId;
+  late final String zip;
+  late final String recordNum;
+  late final String organizationId;
+  late final String notes;
+  late final String lastLogin;
+  late final String isActive;
+  late final String inactiveDate;
+  late final String createdBy;
+  late final String lastModifiedBy;
+  late final String deviceToken;
+  late final String createdAt;
+  late final String updatedAt;
+  late final String deletedAt;
+  late final String fullName;
 
   UserFrom(
-      {this.id,
-      this.image,
-      this.logoImage,
-      this.firstName,
-      this.lastName,
-      this.userTypeId,
-      this.email,
-      this.emailVerifiedAt,
-      this.phone,
-      this.address,
-      this.city,
-      this.stateId,
-      this.zip,
-      this.recordNum,
-      this.organizationId,
-      this.notes,
-      this.lastLogin,
-      this.isActive,
-      this.inactiveDate,
-      this.createdBy,
-      this.lastModifiedBy,
-      this.deviceToken,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
-      this.fullName});
+      {
+       required this.id,
+        required this.image,
+        required this.logoImage,
+        required this.firstName,
+        required this.lastName,
+        required this.userTypeId,
+        required this.email,
+        required this.emailVerifiedAt,
+        required this.phone,
+        required this.address,
+        required this.city,
+        required this.stateId,
+        required this.zip,
+        required this.recordNum,
+        required this.organizationId,
+        required this.notes,
+        required this.lastLogin,
+        required this.isActive,
+        required this.inactiveDate,
+        required this.createdBy,
+        required this.lastModifiedBy,
+        required this.deviceToken,
+        required this.createdAt,
+        required this.updatedAt,
+        required this.deletedAt,
+        required this.fullName});
 
   UserFrom.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();

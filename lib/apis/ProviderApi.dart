@@ -4,7 +4,7 @@ import 'package:flutter_searchabledropdown/constants/ApiLinks.dart';
 import 'package:flutter_searchabledropdown/model/participentList.dart';
 import 'package:http/http.dart';
 
-Future<ParticipantListModel> getParticipantApi({String id}) async {
+Future<ParticipantListModel> getParticipantApi({required String id}) async {
   String token = await getToken();
   print(GET_PARTICIPANT_LIST + id);
   Response response = await get(Uri.parse(GET_PARTICIPANT_LIST + id), headers: {

@@ -6,7 +6,7 @@ import 'package:flutter_searchabledropdown/model/userModel.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User> loginApi({email, password}) async {
+Future<User?> loginApi({email, password}) async {
   Response response = await post(Uri.parse(LOGIN_URL), body: {"password": password, "email": email});
   dynamic data = jsonDecode(response.body);
   print(data['user']);

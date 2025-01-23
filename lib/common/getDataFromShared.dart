@@ -2,20 +2,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> getId() async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  return sharedPreferences.get("id");
+  return sharedPreferences.getString("id") ?? "";
 }
 
 Future<String> getEmail() async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  return sharedPreferences.get("email");
+  return sharedPreferences.getString("email") ?? "";
 }
 
 Future<String> getName() async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  return sharedPreferences.get("name");
+  return sharedPreferences.getString("name") ?? "";
 }
 
 Future<String> getImage() async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  return sharedPreferences.get("image");
+  return sharedPreferences.getString("image") ?? "";
 }

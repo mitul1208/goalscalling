@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_searchabledropdown/apis/goalDetailsApi.dart';
 import 'package:flutter_searchabledropdown/common/circleularIndicator.dart';
 import 'package:flutter_searchabledropdown/common/formateDate.dart';
 import 'package:flutter_searchabledropdown/common/getImages.dart';
-import 'package:flutter_searchabledropdown/fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_searchabledropdown/constants/colorConstants.dart';
 import 'package:flutter_searchabledropdown/constants/imageConstants.dart';
@@ -23,20 +22,20 @@ class GoalDetails extends StatefulWidget {
   final int index;
   final String title;
   final GoalDetailsModel goalDetailsModel;
-  GoalDetails({this.goalDetailsModel, this.index, this.title});
+  GoalDetails({required this.goalDetailsModel,required this.index,required this.title});
   @override
   _GoalDetailsState createState() => _GoalDetailsState();
 }
 
 class _GoalDetailsState extends State<GoalDetails> {
-  double width;
-  double height;
-  GoalDetailsModel list;
+  double width = 0;
+  double height = 0;
+  GoalDetailsModel? list;
   TextEditingController messageController = TextEditingController();
   FocusNode messageFocus = FocusNode();
   ScrollController _scrollController = new ScrollController();
   bool isSendImageScreen = false;
-  File selectedImage;
+  File? selectedImage;
   List<Color> gradientColors = [
     Colors.blue,
     Colors.blue,
@@ -112,12 +111,13 @@ class _GoalDetailsState extends State<GoalDetails> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: ScrollConfiguration(
-                                      behavior: MyBehavior(),
+                                      // behavior: MyBehavior(),
+                                      behavior: ScrollBehavior(),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Container(
-                                          width: list.xaxis.length > 3
-                                              ? (list.xaxis.length * 70.0 + 100)
+                                          width: list!.xaxis.length > 3
+                                              ? (list!.xaxis.length * 70.0 + 100)
                                               : width,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
@@ -190,10 +190,13 @@ class _GoalDetailsState extends State<GoalDetails> {
     if (selectedImage == null) {
       return Container();
     }
-    String mimeStr = lookupMimeType(selectedImage.path);
+    String? mimeStr = lookupMimeType(selectedImage!.path);
+    if(mimeStr==null){
+      return;
+    }
     var fileType = mimeStr.split('/');
     print('file type ${fileType[0]}');
-    String path = p.basename(selectedImage.path);
+    String path = p.basename(selectedImage!.path);
 
     // if(selectedImage.)
 
@@ -204,7 +207,7 @@ class _GoalDetailsState extends State<GoalDetails> {
             ? Container(
                 width: 100,
                 child:
-                    Text(path?.toString() ?? "", overflow: TextOverflow.clip),
+                    Text(path.toString() ?? "", overflow: TextOverflow.clip),
               )
             : ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -214,7 +217,7 @@ class _GoalDetailsState extends State<GoalDetails> {
                   color: Colors.black,
                   alignment: Alignment.center,
                   child: Image.file(
-                    selectedImage,
+                    selectedImage!,
                     fit: BoxFit.fitHeight,
                   ),
                 ),
@@ -392,10 +395,7 @@ class _GoalDetailsState extends State<GoalDetails> {
   }
 
   Widget buildChatScreen() {
-    if (list.activities == null) {
-      return Container();
-    }
-    if (list.activities.length <= 0) {
+    if (list!.activities.length <= 0) {
       return Container();
     }
 
@@ -437,7 +437,7 @@ class _GoalDetailsState extends State<GoalDetails> {
     );
   }
 
-  userDetail({bool isleft, String userType: "", String userName: ""}) {
+  userDetail({required bool isleft, String userType= "", String userName= ""}) {
     return Padding(
       padding: const EdgeInsets.only(left: 45, right: 45),
       child: Container(
@@ -483,7 +483,7 @@ class _GoalDetailsState extends State<GoalDetails> {
     );
   }
 
-  userImage({String imageUrl}) {
+  userImage({required String imageUrl}) {
     return ClipOval(
       child: Container(
         width: 45.0,
@@ -509,7 +509,7 @@ class _GoalDetailsState extends State<GoalDetails> {
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.only(top: 5),
         shrinkWrap: true,
-        itemCount: list.activities.length,
+        itemCount: list!.activities.length,
         controller: _scrollController,
         itemBuilder: (context, index) {
           return Container(
@@ -523,12 +523,12 @@ class _GoalDetailsState extends State<GoalDetails> {
                 children: [
                   userDetail(
                       isleft: true,
-                      userType: list.activities[index].owner.userType.name,
-                      userName: list.activities[index].owner.fullName),
+                      userType: list!.activities[index].owner.userType.name,
+                      userName: list!.activities[index].owner.fullName),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      userImage(imageUrl: list.activities[index].owner.image),
+                      userImage(imageUrl: list!.activities[index].owner.image),
                       SizedBox(
                         width: 5,
                       ),
@@ -549,7 +549,7 @@ class _GoalDetailsState extends State<GoalDetails> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      list.activities[index].updateText,
+                                      list!.activities[index].updateText,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400),
@@ -557,11 +557,11 @@ class _GoalDetailsState extends State<GoalDetails> {
                                     buildHeightBox(0.005),
                                     showAttachment(
                                         attachments:
-                                            list.activities[index].attachments),
+                                            list!.activities[index].attachments),
                                     Container(
                                         alignment: Alignment.centerRight,
                                         child: Text(
-                                          list.activities[index].dateOfActivity,
+                                          list!.activities[index].dateOfActivity,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w400,
@@ -578,25 +578,25 @@ class _GoalDetailsState extends State<GoalDetails> {
                               height: 30,
                               child: Center(
                                   child: Text(
-                                list.activities[index].activityRanking,
+                                list!.activities[index].activityRanking,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18),
                               )),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: list.activities[index]
+                                  color: list!.activities[index]
                                               .activityRanking ==
                                           "0"
                                       ? Colors.red
-                                      : list.activities[index]
+                                      : list!.activities[index]
                                                   .activityRanking ==
                                               "1"
                                           ? primaryColor
-                                          : list.activities[index]
+                                          : list!.activities[index]
                                                       .activityRanking ==
                                                   "2"
                                               ? Colors.green
-                                              : list.activities[index]
+                                              : list!.activities[index]
                                                           .activityRanking ==
                                                       "3"
                                                   ? Colors.blue
@@ -607,8 +607,8 @@ class _GoalDetailsState extends State<GoalDetails> {
                       ),
                     ],
                   ),
-                  replyText(list.activities[index]),
-                  childActivityList(list.activities[index].childActivities),
+                  replyText(list!.activities[index]),
+                  childActivityList(list!.activities[index].childActivities),
                   Divider()
                 ],
               ),
@@ -686,14 +686,17 @@ class _GoalDetailsState extends State<GoalDetails> {
         });
   }
 
-  showAttachment({List<Attachments> attachments}) {
+  showAttachment({List<Attachments>? attachments}) {
     if (attachments == null) {
       return Container();
     }
     if (attachments.length <= 0) {
       return Container();
     }
-    String mimeStr = lookupMimeType(attachments[0].name);
+    String? mimeStr = lookupMimeType(attachments[0].name);
+    if(mimeStr==null){
+      return;
+    }
     var fileType = mimeStr.split('/');
     print('file type 2 ${fileType}');
 
@@ -786,52 +789,52 @@ class _GoalDetailsState extends State<GoalDetails> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) {
-            return TextStyle(
-                color: Colors.grey[500],
-                fontWeight: FontWeight.w400,
-                fontSize: 9);
-          },
-          getTitles: (value) {
-            return list.xaxis[value.toInt()].toString().substring(0, 8) +
-                "\n" +
-                list.xaxis[value.toInt()].toString().substring(10);
-          },
-          margin: 12,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => TextStyle(
-            color: Colors.grey[500],
-            fontWeight: FontWeight.w400,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            if (value.toInt() < 5) {
-              return list.yaxis[value.toInt()].toString();
-            } else {
-              return '';
-            }
-          },
-          reservedSize: 15,
-          margin: 12,
-        ),
+        // bottomTitles: SideTitles(
+        //   showTitles: true,
+        //   getTextStyles: (value) {
+        //     return TextStyle(
+        //         color: Colors.grey[500],
+        //         fontWeight: FontWeight.w400,
+        //         fontSize: 9);
+        //   },
+        //   getTitles: (value) {
+        //     return list.xaxis[value.toInt()].toString().substring(0, 8) +
+        //         "\n" +
+        //         list.xaxis[value.toInt()].toString().substring(10);
+        //   },
+        //   margin: 12,
+        // ),
+        // leftTitles: SideTitles(
+        //   showTitles: true,
+        //   getTextStyles: (value) => TextStyle(
+        //     color: Colors.grey[500],
+        //     fontWeight: FontWeight.w400,
+        //     fontSize: 15,
+        //   ),
+        //   getTitles: (value) {
+        //     if (value.toInt() < 5) {
+        //       return list.yaxis[value.toInt()].toString();
+        //     } else {
+        //       return '';
+        //     }
+        //   },
+        //   reservedSize: 15,
+        //   margin: 12,
+        // ),
       ),
       borderData: FlBorderData(
           show: true,
           border:
-              Border(bottom: BorderSide(width: 0.8, color: Colors.grey[400]))),
+              Border(bottom: BorderSide(width: 0.8, color: Colors.grey[400]!))),
       minX: 0,
-      maxX: double.parse((list.xaxis.length - 1).toString()),
+      maxX: double.parse((list!.xaxis.length - 1).toString()),
       minY: 0,
-      maxY: double.parse((list.yaxis.length).toString()),
+      maxY: double.parse((list!.yaxis.length).toString()),
       lineBarsData: [
         LineChartBarData(
           spots: getFLSpotList(),
           isCurved: true,
-          colors: gradientColors,
+          color: Colors.amber,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -844,9 +847,9 @@ class _GoalDetailsState extends State<GoalDetails> {
 
   List<FlSpot> getFLSpotList() {
     List<FlSpot> flspotLit = [];
-    for (int i = 0; i < list.graphData.length; i++) {
+    for (int i = 0; i < list!.graphData.length; i++) {
       flspotLit.add(FlSpot(
-          double.parse(i.toString()), double.parse(list.graphData[i].y)));
+          double.parse(i.toString()), double.parse(list!.graphData[i].y)));
     }
     return flspotLit;
   }
@@ -960,7 +963,7 @@ class _GoalDetailsState extends State<GoalDetails> {
     });
   }
 
-  getGoalDetails({bool needToScroll: false}) async {
+  getGoalDetails({bool needToScroll= false}) async {
     list = await getGoalDetail(index: widget.index);
     setState(() {
       isLoading = false;
@@ -983,14 +986,14 @@ class _GoalDetailsState extends State<GoalDetails> {
       successMessage(message: "Select Goal Stage");
       return;
     }
-    if (messageController.text == '' || messageController.text == null) {
+    if (messageController.text == '') {
       successMessage(message: "Please Enter message");
       return;
     }
     bool isSuccess = await setGoalMessage(
         activityRanking: selectedGoal.toString(),
         goalMessage: messageController.text,
-        goalDetail: list.goalDetail,
+        goalDetail: list!.goalDetail,
         image: selectedImage);
 
     if (isSuccess) {
@@ -1004,13 +1007,5 @@ class _GoalDetailsState extends State<GoalDetails> {
     setState(() {
       isLoadingActivity = false;
     });
-  }
-}
-
-class MyBehavior extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }

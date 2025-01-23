@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 MyGlobals myGlobals = MyGlobals();
 
 class MyGlobals {
-  GlobalKey _scaffoldKey;
+  late GlobalKey _scaffoldKey;
   MyGlobals() {
     _scaffoldKey = GlobalKey();
   }

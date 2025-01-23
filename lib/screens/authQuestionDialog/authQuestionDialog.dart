@@ -65,5 +65,5 @@ Future<void> _authenticate(auth, context) async {
     } else {
       Navigator.pop(context);
     }
-  } on PlatformException catch (e) {} finally {}
+  } on PlatformException {} finally {}
 }

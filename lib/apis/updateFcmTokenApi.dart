@@ -5,9 +5,8 @@ import 'package:flutter_searchabledropdown/common/toastMessage.dart';
 import 'package:flutter_searchabledropdown/constants/ApiLinks.dart';
 import 'package:flutter_searchabledropdown/model/userModel.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User> updateDeviceFcmToken({userId, deviceToken}) async {
+Future<User?> updateDeviceFcmToken({userId, deviceToken}) async {
   Response response = await post(Uri.parse(UPDATE_DEVICE_TOKEN),
       headers: {'Authorization': 'Bearer ' + await getToken()},
       body: {"user_id": userId, "device_token": deviceToken});
